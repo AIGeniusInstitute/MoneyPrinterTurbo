@@ -1,6 +1,8 @@
 import math
 import os.path
+import random
 import re
+import uuid
 from os import path
 
 from loguru import logger
@@ -10,6 +12,7 @@ from app.models import const
 from app.models.schema import VideoConcatMode, VideoParams
 from app.services import llm, material, subtitle, video, voice
 from app.services import state as sm
+from app.services.themes import theme_list
 from app.utils import utils
 
 
@@ -157,7 +160,7 @@ def get_video_materials(task_id, params, video_terms, audio_duration):
 
 
 def generate_final_videos(
-    task_id, params, downloaded_videos, audio_file, subtitle_path
+        task_id, params, downloaded_videos, audio_file, subtitle_path
 ):
     final_video_paths = []
     combined_video_paths = []
@@ -330,10 +333,57 @@ def start(task_id, params: VideoParams, stop_at: str = "video"):
 
 
 if __name__ == "__main__":
-    task_id = "task_id"
-    params = VideoParams(
-        video_subject="金钱的作用",
-        voice_name="zh-CN-XiaoyiNeural-Female",
-        voice_rate=1.0,
-    )
-    start(task_id, params, stop_at="video")
+
+    themes = theme_list
+
+    # voices:
+    # Name: zh-CN-XiaoxiaoNeural
+    # Gender: Female
+    #
+    # Name: zh-CN-XiaoyiNeural
+    # Gender: Female
+    #
+    # Name: zh-CN-YunjianNeural
+    # Gender: Male
+    #
+    # Name: zh-CN-YunxiNeural
+    # Gender: Male
+    #
+    # Name: zh-CN-YunxiaNeural
+    # Gender: Male
+    #
+    # Name: zh-CN-YunyangNeural
+    # Gender: Male
+    #
+    # Name: zh-CN-liaoning-XiaobeiNeural
+    # Gender: Female
+    #
+    # Name: zh-CN-shaanxi-XiaoniNeural
+    # Gender: Female
+    voices = [
+        "zh-CN-XiaoxiaoNeural-Female",
+        "zh-CN-XiaoyiNeural-Female",
+        "zh-CN-YunjianNeural-Male",
+        "zh-CN-YunxiNeural-Male",
+        "zh-CN-YunxiaNeural-Male",
+        "zh-CN-YunyangNeural-Male",
+        "zh-CN-liaoning-XiaobeiNeural-Female",
+        "zh-CN-shaanxi-XiaoniNeural-Female",
+    ]
+
+    # 生成 1000 个视频
+    for i in range(1000):
+        # 随机选择一个主题
+        video_subject = random.choice(themes)
+        # 随机选择一个语音
+        voice_name = random.choice(voices)
+        # 1. Generate uuid task_id
+        task_id = str(uuid.uuid4())
+
+        # 2. Build Video Params
+        params = VideoParams(
+            video_subject=video_subject,
+            voice_name=voice_name,
+            voice_rate=1.0,
+        )
+        start(task_id, params, stop_at="video")
