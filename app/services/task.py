@@ -190,7 +190,12 @@ def generate_final_videos(
         _progress += 50 / params.video_count / 2
         sm.state.update_task(task_id, progress=_progress)
 
-        final_video_path = path.join(utils.task_dir(task_id), f"final-{index}.mp4")
+        # video title: 去掉视频标题中的特殊字符: 只保留字母、数字、空格,
+        #  \w 匹配字母、数字、下划线
+        #  \s 匹配空格
+        video_title = re.sub(r"[^\w\s]", "", params.video_subject)
+
+        final_video_path = path.join(utils.task_dir(task_id), f"{video_title}-final-{index}.mp4")
 
         logger.info(f"\n\n## generating video: {index} => {final_video_path}")
         video.generate_video(
