@@ -341,30 +341,6 @@ if __name__ == "__main__":
 
     themes = theme_list
 
-    # voices:
-    # Name: zh-CN-XiaoxiaoNeural
-    # Gender: Female
-    #
-    # Name: zh-CN-XiaoyiNeural
-    # Gender: Female
-    #
-    # Name: zh-CN-YunjianNeural
-    # Gender: Male
-    #
-    # Name: zh-CN-YunxiNeural
-    # Gender: Male
-    #
-    # Name: zh-CN-YunxiaNeural
-    # Gender: Male
-    #
-    # Name: zh-CN-YunyangNeural
-    # Gender: Male
-    #
-    # Name: zh-CN-liaoning-XiaobeiNeural
-    # Gender: Female
-    #
-    # Name: zh-CN-shaanxi-XiaoniNeural
-    # Gender: Female
     voices = [
         "zh-CN-XiaoxiaoNeural-Female",
         "zh-CN-XiaoyiNeural-Female",
@@ -372,14 +348,9 @@ if __name__ == "__main__":
         "zh-CN-YunxiNeural-Male",
         "zh-CN-YunxiaNeural-Male",
         "zh-CN-YunyangNeural-Male",
-        "zh-CN-liaoning-XiaobeiNeural-Female",
-        "zh-CN-shaanxi-XiaoniNeural-Female",
     ]
 
-    # 生成 1000 个视频
-    for i in range(1000):
-        # 随机选择一个主题
-        video_subject = random.choice(themes)
+    for _, video_subject in enumerate(themes):
         # 随机选择一个语音
         voice_name = random.choice(voices)
         # 1. Generate uuid task_id
