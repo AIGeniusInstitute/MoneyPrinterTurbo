@@ -361,5 +361,6 @@ if __name__ == "__main__":
             video_subject=video_subject,
             voice_name=voice_name,
             voice_rate=1.0,
+            paragraph_number=3,
         )
         start(task_id, params, stop_at="video")
