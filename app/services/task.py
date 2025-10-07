@@ -363,4 +363,6 @@ if __name__ == "__main__":
             voice_rate=1.0,
             paragraph_number=3,
         )
+
+        # 3. Start task
         start(task_id, params, stop_at="video")
